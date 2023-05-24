@@ -261,6 +261,9 @@ def initialize_rest(*, reload_script_modules=False):
 
     restore_config_state_file()
 
+    modules.sd_vae.refresh_vae_list()
+    startup_timer.record("refresh VAE")
+    
     if cmd_opts.ui_debug_mode:
         shared.sd_upscalers = upscaler.UpscalerLanczos().scalers
         modules.scripts.load_scripts()
@@ -282,8 +285,6 @@ def initialize_rest(*, reload_script_modules=False):
     modelloader.load_upscalers()
     startup_timer.record("load upscalers")
 
-    modules.sd_vae.refresh_vae_list()
-    startup_timer.record("refresh VAE")
     modules.textual_inversion.textual_inversion.list_textual_inversion_templates()
     startup_timer.record("refresh textual inversion templates")
 
